@@ -5,14 +5,14 @@ const btnCommits = document.getElementById("btnCommits")
 const divResult = document.getElementById("divResult")
 btnRepos.addEventListener("click", getRepos)
 btnIssues.addEventListener("click", getIssues)
-btnCommits.addEventListener("click", e=> getCommits())
+btnCommits.addEventListener("click", getCommits)
 
 async function getRepos() {
     clear();
     const url = "https://api.github.com/search/repositories?q=stars:150000..300000"
     const response = await fetch(url)
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const anchor = document.createElement("a")
         anchor.href = i.html_url;
         anchor.textContent = i.full_name;
@@ -25,7 +25,7 @@ async function getIssues() {
     const url = "https://api.github.com/search/issues?q=author:raisedadead repo:freecodecamp/freecodecamp type:issue"
     const response = await fetch(url)
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const anchor = document.createElement("a")
         anchor.href = i.html_url;
         anchor.textContent = i.title;
@@ -33,9 +33,9 @@ async function getIssues() {
         divResult.appendChild(document.createElement("br"))
     })
 }
-async function getCommits(url="https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-03-01..2019-03-31") {
+async function getCommits() {
     clear();
-    
+    url="https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-03-01..2019-03-31"
     const headers = {
         "Accept" : "application/vnd.github.cloak-preview"
     }
@@ -44,7 +44,7 @@ async function getCommits(url="https://api.github.com/search/commits?q=repo:free
         "headers" : headers
     })
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const img = document.createElement("img")
         img.src = i.author.avatar_url;
         img.style.width="32px"
