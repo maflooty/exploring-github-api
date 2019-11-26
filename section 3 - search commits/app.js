@@ -56,13 +56,7 @@ async function getCommits(url="https://api.github.com/search/commits?q=repo:free
         divResult.appendChild(anchor)
         divResult.appendChild(document.createElement("br"))
     })
-    urls.forEach(u => {
-        const btn = document.createElement("button")
-        btn.textContent = u.title;
-        btn.addEventListener("click", e=> getCommits(u.url))
-        divResult.appendChild(btn);
-    })
-}
+ }
 function clear(){
     while(divResult.firstChild) 
         divResult.removeChild(divResult.firstChild)
