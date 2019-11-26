@@ -5,14 +5,14 @@ const btnCommits = document.getElementById("btnCommits")
 const divResult = document.getElementById("divResult")
 btnRepos.addEventListener("click", getRepos)
 btnIssues.addEventListener("click", getIssues)
-btnCommits.addEventListener("click", e=> getCommits())
+btnCommits.addEventListener("click", e => getCommits())
 
 async function getRepos() {
     clear();
     const url = "https://api.github.com/search/repositories?q=stars:150000..300000"
     const response = await fetch(url)
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const anchor = document.createElement("a")
         anchor.href = i.html_url;
         anchor.textContent = i.full_name;
@@ -25,7 +25,7 @@ async function getIssues() {
     const url = "https://api.github.com/search/issues?q=author:raisedadead repo:freecodecamp/freecodecamp type:issue"
     const response = await fetch(url)
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const anchor = document.createElement("a")
         anchor.href = i.html_url;
         anchor.textContent = i.title;
@@ -46,14 +46,14 @@ async function getCommits(url="https://api.github.com/search/commits?q=repo:free
     //"<https://api.github.com/search/commits?q=repo%3Afreecodecamp%2Ffreecodecamp+author-date%3A2019-03-01..2019-03-31&page=2>; rel="next", <https://api.github.com/search/commits?q=repo%3Afreecodecamp%2Ffreecodecamp+author-date%3A2019-03-01..2019-03-31&page=27>; rel="last""
     const link = response.headers.get("link")
     const links = link.split(",")
-    const urls = links.map(a=> {
+    const urls = links.map(a => {
         return {
             url: a.split(";")[0].replace(">","").replace("<",""),
             title:a.split(";")[1]
         }
     })
     const result = await response.json()
-    result.items.forEach(i=>{
+    result.items.forEach(i => {
         const img = document.createElement("img")
         img.src = i.author.avatar_url;
         img.style.width="32px"
@@ -68,10 +68,10 @@ async function getCommits(url="https://api.github.com/search/commits?q=repo:free
     urls.forEach(u => {
         const btn = document.createElement("button")
         btn.textContent = u.title;
-        btn.addEventListener("click", e=> getCommits(u.url))
+        btn.addEventListener("click", e => getCommits(u.url))
         divResult.appendChild(btn);
     })
-}
+};
 function clear(){
     while(divResult.firstChild) 
         divResult.removeChild(divResult.firstChild)
